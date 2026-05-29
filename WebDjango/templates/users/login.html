@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+ <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <div class="row">
+                    <div class="col-12 col-md-6 offset-md-3">
+                        <div class="card">
+                            <div class="card-body">
+
+                       
+                   
+                <h2>Login</h2>
+                <form method="post">
+                    {% csrf_token %} <!--evita ataques-->
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control">
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                {% if messages %}
+                {% for m in messages %} <!--si hay mensaje iterar con la variable m y mostrarlo-->
+                {% if m.tags == 'success' %}<!--si es igual a sucess-->
+                <div class="alert alert-success">
+                    {{m}}
+                </div>
+                {% else %}
+                <div class="alert alert-danger">
+                    {{m}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                </form>
+                 </div>
+                </div>
+                 </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

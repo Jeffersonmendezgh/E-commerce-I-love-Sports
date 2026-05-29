@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+{% include "orden/snippets/readcrumb.html" %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="h2">
+         Detalles del pedido
+    </div>
+    <div class="col-8">
+    <div class="card">
+        <div class="card-body">
+            {% for product in cart.products.all %}
+            {% include 'Orden/snippets/product.html' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="col">
+    {% url 'direccion' as next_url %}<!--genera la url de la vista direccion-->
+    {% include 'orden/snippets/detalles.html' with next_url=next_url %}<!--le pasamos la var nex_url al next_url de snippets, ahora apuntara a esa url y vista-->
+</div>
+{% endblock %}

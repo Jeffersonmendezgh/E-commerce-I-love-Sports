@@ -1,0 +1,20 @@
+<div class="mt-4">
+<form method="post">
+{% csrf_token %}
+
+{% for field in form %}
+
+<div class="form-group">
+{{field.label_tag}}<!--- label_tag Renderiza la etiqueta (label) del campo en HTML.
+ y field crea el campo input-->
+{{field}}
+
+{% if field.errors %}
+{{field.errors}}
+{% endif %}
+</div>
+{% endfor %}
+
+<button class="btn btn-warning mt-2" type="submit">{{messages}}</button>
+</form>
+</div>

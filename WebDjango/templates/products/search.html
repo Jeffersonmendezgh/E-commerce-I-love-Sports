@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col">
+    {% include 'snippets/search.html' %}
+    <hr>
+    <p>Resultados de busqueda para {{query}}</p>
+
+    <div class="row">
+        
+{% for i in product_list %}<!--se cambio de object a product pq el objeto no devuelve lo que devuelve product que recordemos es el objetoc completo de la clase Product-->
+    
+     <div class="col-3 mt-4">
+        
+        {% include 'snippets/product.html' %}
+
+     </div>
+       
+           
+    
+    {%endfor%}
+    </div>
+</div>
+{% endblock %}

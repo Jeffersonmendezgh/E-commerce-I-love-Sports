@@ -1,0 +1,56 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="col">
+
+                <div class="col-12 col-md-6 offset-md-3">
+                    <div class="card">
+                        <div class="card-body">
+
+                       
+
+                <h2>Registro</h2>
+                <form method="post">
+                    {% csrf_token %}
+                  <!--  <div class="form-group">
+                        {{form.username.label_tag}} 
+                        {{form.username}}
+                    </div>
+
+                    <div class="form-group">
+                        {{form.correo.label_tag}}
+                        {{form.correo}}
+                    </div>
+
+                    <div class="form-group">
+                        {{form.password.label_tag}}
+                        {{form.password}}
+                    </div>
+                    -->
+
+                    {% for m in form %}<!--cada m es un BoundField; campo ligado al formulario-->
+                    <div class="form-group">
+                        {{m.label_tag}}<!--label genera la tag label para cada campo-->
+                        {{m}}<!--m renderiza el widget html de cada campo ejemplo: input type="text" name="username" id="id_username" para usuario-->
+                        {% if m.errors %}<!--si hay errores en la varaible m iteradora-->
+                        {{m.errors}}<!--muestra los errores como datos invalidos-->
+                        {% endif %}
+                        <!--entonces basicamente iteramos sobre form que contiene los campos que vienen desde la clase registro-->
+                    </div>
+
+                    {% endfor %}
+                    <br>
+                    <button type="submit" class="btn btn-primary">Registro</button>
+                </form>
+                 </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

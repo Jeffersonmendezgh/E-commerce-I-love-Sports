@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load funcion_tag %}
+{% block content %}
+
+{% if cart.products.exists %}
+<div class="col-8">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            {% for i in cart.product_related %}<!-- accedemos a la tabla intermedia _set lo agrega el ORM-->
+            {% with product=i.product %}<!--agregamos a product el valor de i asi sigue funcionando la var product y with crea variable temporal en bloque especifivo-->
+            <tr>
+                <th>{{forloop.counter}}</th><!--forloop.counter -  devuelve el número de iteración actual, empezando en 1.-->
+                <th>
+                    {% if product.image %}
+                    <img src="{{product.image.url}}" alt="ImangenProducto" width="70" height="70">
+                    {% endif %}
+
+                </th>
+                <th>
+                    <a href="{% url 'product' product.slug %}">{{product.title}}</a>
+                </th>
+                <th>
+                    {{ i.quantity }}
+                </th>
+                <th>
+                    <span class="font-weight text-danger">{{product.price | precio_tag}}</span>
+               {% include 'carts/snippets/remove.html' %}
+                </th>
+            </tr>
+            {% endwith %}
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+<!--bloque para subtotal-->
+<div class="col">
+    <div class="card">
+        <div class="card-body">
+            <div>
+                Subtotal:({{cart.products.count}}) <span class="text-danger">{{cart.subtotal | precio_tag}}</span>
+            </div>
+            <div class="mt-2">
+                <a href="{% url 'orden' %}" class="btn btn-warning">Pagar ahora</a><!--pagar ahora button-->
+            </div>
+            <!--seguir comprando-->
+            <div class="mt-2">
+                <a href="{% url 'index' %}" class="btn btn-primary">Seguir comprando</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="col">
+    <p class="h3">El carrito no tiene productos</p>
+    <a href="{% url 'index' %}">Comprar ahora</a>
+</div>
+{% endif %}
+
+{% endblock %}

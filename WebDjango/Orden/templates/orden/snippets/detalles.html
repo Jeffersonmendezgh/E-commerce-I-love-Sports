@@ -1,0 +1,41 @@
+{% load funcion_tag %}
+<div class="card card border-warning mb-3" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Resumen del pedido</h5>
+    </div>
+    <div>
+        <table class="table table-borderless table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">item</th>
+                    <th scope="col">precios</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-info">
+                    <td>Productos: </td>
+                    <td>{{cart.total | precio_tag}} </td>
+                </tr>
+                <tr class="table-info">
+                    <th>Envio: </th>
+                    <th>{{orden.envio_total}} </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <hr>
+        <div class="fw-bolder text-danger">
+            Total (impuestos incluidos)
+            <div class="d-inline-block" id="orden-total">
+                {{orden.total | precio_tag}}
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="d-grid gap-2 mt-2">
+        <a class="btn btn-warning" href="{{next_url}}">Confirmar</a><!--esperando que se le pase la variablepara saber a donde hir-->
+    </div>
+</div>

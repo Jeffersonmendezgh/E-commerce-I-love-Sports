@@ -1,0 +1,73 @@
+{% load funcion_tag %}
+<div class="card mb-2">
+    <div class="card-header">
+
+      
+        <div class="row">
+
+            <div class="col-4">
+                <div class="alert alert-success d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                <div>
+                    ordenes completadas
+                </div>
+                
+            </div>
+            <div>
+                    {{orden.created_at}}
+                </div>
+            </div>
+            <!--total-->
+            <div class="col-4">
+                <div class="badge bt-primary">
+                    Total
+                </div>
+                <div>
+                    {{orden.total | precio_tag}}
+                </div>
+            </div>
+           
+<!--a donde se envio-->
+            <div class="col-4">
+                <div class="badge bg-danger">
+                    Direccion de envio
+                </div>
+                <div>
+                    {{orden.direccion_envio}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+      <!---->
+        <div class="card-body">
+            {% for i in orden.cart.product_related %}
+            {% with product=i.product %}
+            <div class="row">
+                <div class="col-4">
+                    {% if product.image %}
+                    <img src="{{product.image.url}}" alt="" width="70" height="70">
+                    {% endif %}
+
+                </div>
+                <div class="col-4">
+                    <div>
+                        {{product.title}}
+                    </div>
+                    <div class="text-danger">
+                        {{product.price | precio_tag}}
+                    </div>
+                </div>
+                 <div class="col-4">
+                <div>
+                    cantidad
+                </div>
+                <div>
+                    {{i.quantity}}
+                </div>
+            </div>
+            </div>
+            {% endwith %}
+            {% endfor %}
+        </div>
+</div>

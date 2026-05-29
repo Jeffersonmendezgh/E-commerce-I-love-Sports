@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{%  block breadcrumb %}
+{% include 'orden/snippets/readcrumb.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="col">
+{% if direccion_envio %}
+<div class="h3">
+Tu pedido esta a punto de llegar
+</div>
+
+<div>
+    {% include 'direccion_envio/snippets/cartDirecciones.html' %}
+    <div class="mt-1">
+        <a class="btn btn-danger" href="{% url 'confirmacion' %}">Continuar</a>
+    </div>
+    {% if contDireccion %}
+    <div class="mt-2">
+    <a class="btn btn-primary" href="{% url 'select_direccion' %}">Seleccionar Direccion</a>
+    </div>
+    {% endif %}
+</div>
+
+{% else %}
+<div class="h3">
+    Registra tu direccion
+    <div class="">
+        {% url 'direccion' as next_url %}
+        <a class="btn btn-primary" href="{% url 'form_direccion' %}?next={{next_url}}">Crear nueva direccion</a><!--next para que lo redirija despues que se ingrese la direccion-->
+    </div>
+    {% endif %}
+</div>
+</div>
+{% endblock %}

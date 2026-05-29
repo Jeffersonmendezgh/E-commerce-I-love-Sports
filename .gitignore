@@ -1,0 +1,54 @@
+# Entorno virtual en la raíz
+venv/
+
+# Archivos compilados de Python (busca en todo el proyecto)
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
+# Base de datos local (SQLite) dentro de tu app
+**/db.sqlite3
+**/db.sqlite3-journal
+
+# Configuración de entornos y llaves secretas
+**/.env
+**/local_settings.py
+
+# Archivos multimedia generados en desarrollo
+**/media/
+
+# Carpetas de editores y sistema
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Extensiones de C y empaquetado de Python
+**/*.so
+**/.Python
+**/build/
+**/develop-eggs/
+**/dist/
+**/downloads/
+**/eggs/
+**/lib/
+**/lib64/
+**/parts/
+**/sdist/
+**/var/
+**/wheels/
+**/*.egg-info/
+**/.installed.cfg
+**/*.egg
+**/MANIFEST
+
+# Reportes de pruebas y cobertura
+**/*.log
+**/htmlcov/
+**/.tox/
+**/.nox/
+**/.coverage
+**/.coverage.*
+**/.cache
+**/.pytest_cache/

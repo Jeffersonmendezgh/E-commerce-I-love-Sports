@@ -1,0 +1,25 @@
+<div class="card">
+    <h4 class="card-header"></h4>
+    <div class="card-body">
+        <h5 class="card-title">{{direccion_envio.direccion}}</h5> <!--aca insertamos las variables del decorador property fun direccion-->
+    <div class="card-title">
+        {{direccion_envio.reference}}
+        <div class="card-title">
+            {{direccion_envio.postal_code}}
+        </div>
+        <div class="mt-3">
+            <a href="{% url 'update' direccion_envio.pk %}" class="btn btn-primary">Editar</a>
+            {% if direccion_envio.default %}
+            <div>
+                <span class="badge bg-success">Direccion principal</span>
+            </div>
+            {% else %}
+            <a href="{% url 'default' direccion_envio.pk %}" class="btn btn-warning">Default</a>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'remove' direccion_envio.pk %}" class="btn btn-danger">Eliminar</a><!--toca pasarle el id con la pk del objeto actual-->
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</div>

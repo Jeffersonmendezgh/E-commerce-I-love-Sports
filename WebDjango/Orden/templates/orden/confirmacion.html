@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+{% include 'orden/snippets/readcrumb.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="col-8">
+<div class="h3">
+Confirmacion de pedido
+</div>
+<div class="card">
+<div class="card-body">
+    <div class="row">
+        <div class="col-4"><!--tarjeta para direccion envio-->
+            <div class="badge bg-primary text-wrap">
+                Direccion de envio
+            </div>
+            <div class="fst-italic">
+                Direccion: {{direccion_envio.direccion}}
+            </div>
+            <div class="fst-italic">
+               Domicilio: {{direccion_envio.line1}}
+            </div>
+            <div class="fst-italic">
+                Referencia: {{direccion_envio.reference}}
+            </div>
+            <div class="fst-italic">
+                Postal Colde: {{direccion_envio.postal_code}}
+            </div>
+        </div>
+        <div class="col-4"><!--tarjeta metodo de pago-->
+            <div class="badge bg-danger text-wrap">
+                Metodo de pago
+            </div>
+            <div class="fst-italic">
+                Tarjeta de pago: 123524
+            </div>
+        </div>
+        <div class="col-4"><!--tarjeta cupones-->
+            <div class="badge bg-warning text-wrap">
+                Codigo de descuento
+            </div>
+            <form id="formPromo-codigo", action="{% url 'validar' %}">
+                <input type="text" name="codigo" value="{{orden.promo_codigo.codigo}}" class="form-control" placeholder="codigo descuento"{% if orden.promo_codigo. %}
+                readonly{% endif %}>
+            </form>
+            <div class="text-success" id="codigosucces" style="font-size:15px"><!--div para verficar codigo aplicado-->
+               {% if orden.promo_codigo %}<!--si existe orden.promo_codigo muestra el mensaje-->
+                Codigo aplicado
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="alert alert-primary" role="alert">
+    Esta es tu orden hasta el momento <a class="alert-link" href="{% url 'orden' %}">Mi orden</a>
+puedes modificar si quieres
+</div>
+<div class="mt-1">
+    <div class="card-body">
+        {% for product in cart.products.all %}
+        {% include 'orden/snippets/product.html' %}
+        {% endfor %}
+    </div>
+</div>
+</div>
+<div class="col">
+    {% url 'completado' as next_url %}
+    {% include 'orden/snippets/detalles.html' with next_url=next_url %}<!--ahora apunta a la view completado al recibir en detalle.html esta var-->
+    <div class="'">
+        <div class="card card border-warning mb-3" style="width: 18rem;">
+            <div class="card-body">
+                <a href="{% url 'cancelar' %}" class="btn btn-danger d-grid gap-2">Eliminar orden</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    const form = document.getElementById('formPromo-codigo');
+    form.addEventListener('submit', function(e){
+        e.preventDefault()//evita que el form se envie al recargar la pagina
+        const input = this.codigo//name = codigo del form
+        const codigo = input.value;//texto que el usuario escribio
+        const url = this.action + '?code=' + codigo;
+        const cont_total = document.getElementById('orden-total');
+        const cont_succes = document.getElementById('codigosucces');
+
+//this.action la url definida en el atributo action del form 
+//'?code='+codigo:añade el parametro get con el codigo
+        console.log(url)
+
+        fetch(url)//hacemos la peticion y esperamos json
+        .then(response => response.json())
+        .then(response => {
+            if (response.status === true){
+                cont_total.innerHTML = "$" + response.total
+                cont_succes.classList.add('text-succes')
+                cont_succes.innerHTML = 'codigo aplicado'
+            }else {
+                cont_succes.innerHTML = "codigo no valido"
+                cont_succes.classList.remove('text-success')
+                cont_succes.classList.add('text-danger')
+            }
+        })
+
+    });
+    //this: es una referencua al contexto de ejecucion actual
+    //en este caso this hace referencia al elemento dom que disparo el evento
+</script>
+{% endblock %}
